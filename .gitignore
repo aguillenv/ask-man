@@ -1,0 +1,37 @@
+/target
+# Cargo package files
+**/*.rs.bk
+Cargo.lock
+
+# Build output
+/target
+
+# VSCode settings
+.vscode/
+*.code-workspace
+
+# By-products of 'cargo test', 'cargo bench', etc.
+/**/*.dSYM/
+**/*.profraw
+
+# Node modules (if using frontend)
+/node_modules/
+
+# Misc
+*.log
+*.tmp
+
+# IDE files
+.idea/
+*.swp
+*.swo
+
+# MacOS files
+.DS_Store
+
+# Coverage
+/coverage/
+*.lcov
+
+# Rust Analyzer
+rust-project.json
