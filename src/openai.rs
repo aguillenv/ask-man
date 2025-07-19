@@ -31,8 +31,15 @@ struct MessageContent {
     content: String,
 }
 
-pub fn get_command_sync(user_prompt: &str) -> Result<String, reqwest::Error> {
-    let system_prompt = include_str!("../prompt.txt");
+pub fn get_command_sync(
+    user_prompt: &str,
+    should_explain: &bool,
+) -> Result<String, reqwest::Error> {
+    let system_prompt = if *should_explain {
+        include_str!("../explain.txt")
+    } else {
+        include_str!("../prompt.txt")
+    };
 
     let req = OpenAIRequest {
         model: "gpt-4o-mini".to_string(),
