@@ -19,6 +19,7 @@ struct Message {
 #[derive(Debug, Deserialize)]
 struct OpenAIResponse {
     choices: Option<Vec<Choice>>,
+    error: Option<OpenAIError>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -29,6 +30,11 @@ struct Choice {
 #[derive(Debug, Deserialize)]
 struct MessageContent {
     content: String,
+}
+
+#[derive(Debug, Deserialize)]
+struct OpenAIError {
+    message: String,
 }
 
 pub fn get_command_sync(
@@ -65,6 +71,11 @@ pub fn get_command_sync(
         .json(&req)
         .send()?
         .json()?;
+
+    if let Some(error) = res.error {
+        let err_msg = format!("[OpenAI] Error: {}", error.message);
+        return Ok(err_msg);
+    }
 
     let choices = res.choices;
 
