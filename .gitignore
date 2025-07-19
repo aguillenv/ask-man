@@ -35,3 +35,6 @@ Cargo.lock
 
 # Rust Analyzer
 rust-project.json
+
+# Environment files
+.env
