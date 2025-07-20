@@ -44,9 +44,6 @@ jobs:
         run: |
           TARGET=$(cat target.txt)
           rustup target add $TARGET
-          export OPENSSL_STATIC=1
-          export OPENSSL_NO_PKG_CONFIG=1
-          export OPENSSL_VENDORED=1
           cargo build --release --target $TARGET
 
       - name: Prepare Artifact
@@ -54,7 +51,7 @@ jobs:
           TARGET=$(cat target.txt)
           mkdir dist
           cp target/$TARGET/release/ask-man dist/ask-man
-          TAR_NAME="ask-man-${{ matrix.os }}-${{ matrix.arch }}.tar.gz"
+          TAR_NAME="ask-man-${{ matrix.os.replace('-latest', '') }}-${{ matrix.arch }}.tar.gz"
           tar -czvf $TAR_NAME -C dist ask-man
 
       - name: Upload Release Asset
