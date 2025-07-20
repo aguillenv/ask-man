@@ -1,0 +1,42 @@
+name: Build and Release Binaries
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Build Release Binary
+        run: cargo build --release
+
+      - name: Prepare Artifact
+        run: |
+          mkdir dist
+          if [[ "$RUNNER_OS" == "macOS" ]]; then
+            cp target/release/ask-man dist/ask-man
+            tar -czvf ask-man-macos.tar.gz -C dist ask-man
+          else
+            cp target/release/ask-man dist/ask-man
+            tar -czvf ask-man-linux.tar.gz -C dist ask-man
+          fi
+
+      - name: Upload Release Asset
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ask-man-*.tar.gz
