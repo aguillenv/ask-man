@@ -15,50 +15,60 @@
 
 ## 📥 Installation
 
-1. **Clone the repository:**
+1. **Download the latest binary via curl**
+
+Replace `<os>` and `<arch>` with your platform values (`macos` or `linux`, `x86_64` or `aarch64`):
 
 ```sh
-git clone https://github.com/yourusername/ask-man.git
-cd ask-man
+curl -L https://github.com/aguillenv/ask-man/releases/download/latest/ask-man-<os>-<arch>.tar.gz -o ask-man.tar.gz
 ```
 
-2. **Set up your OpenAI API key:**
-
-Create a `.env` file in the project root:
+For example, for macOS on Intel (`x86_64`):
 
 ```sh
-echo "OPENAI_API_KEY=your_openai_api_key_here" > .env
+curl -L https://github.com/aguillenv/ask-man/releases/download/latest/ask-man-macos-x86_64.tar.gz -o ask-man.tar.gz
 ```
 
-3. **Build the project:**
+2. **Extract the archive**
 
 ```sh
-cargo build --release
+tar -xzf ask-man.tar.gz
 ```
 
-4. **(Optional) Install globally:**
+3. **Move the binary to your `$PATH`**
 
 ```sh
-cargo install --path .
+sudo mv ask-man /usr/local/bin/
+chmod +x /usr/local/bin/ask-man
 ```
 
----
+4. **Verify installation**
+
+```sh
+ask-man --help
+```
+
+5. **Set your OpenAI API key**
+
+Create a `.env` file following the `.env.template` in your working directory with:
+
+```env
+OPENAI_API_KEY=your_openai_api_key_here
+```
 
 ## ⚡ Usage
 
 To generate a shell command from natural language:
 
 ```sh
-ask-man "list processes running on port 3000"
+ask-man "zip a folder"
 ```
 
 To receive a command **with explanation**:
 
 ```sh
-ask-man "zip a folder" --explain
+ask-man "list processes running on port 3000" --explain
 ```
-
----
 
 ## ⚙️ Configuration
 
@@ -71,14 +81,10 @@ ask-man "zip a folder" --explain
 * **Model selection:**
   Change the OpenAI model in `src/openai.rs` (e.g., `gpt-4`, `gpt-4o`).
 
----
-
 ## 📄 License
 
 This project is licensed under the **MIT License**.
 See the [LICENSE](./LICENSE.md) file for details.
-
----
 
 ## 🤝 Contributing
 
