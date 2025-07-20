@@ -9,8 +9,10 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     strategy:
+      fail-fast: false
       matrix:
         os: [macos-latest, ubuntu-latest]
+        arch: [x86_64, aarch64]
 
     steps:
       - uses: actions/checkout@v4
@@ -21,19 +23,39 @@ jobs:
           toolchain: stable
           override: true
 
+      - name: Set Rust Target
+        run: |
+          if [[ "${{ matrix.os }}" == "macos-latest" ]]; then
+            if [[ "${{ matrix.arch }}" == "x86_64" ]]; then
+              echo "x86_64-apple-darwin" > target.txt
+            else
+              echo "aarch64-apple-darwin" > target.txt
+            fi
+          else
+            if [[ "${{ matrix.arch }}" == "x86_64" ]]; then
+              echo "x86_64-unknown-linux-gnu" > target.txt
+            else
+              echo "aarch64-unknown-linux-gnu" > target.txt
+            fi
+          fi
+          cat target.txt
+
       - name: Build Release Binary
-        run: cargo build --release
+        run: |
+          TARGET=$(cat target.txt)
+          rustup target add $TARGET
+          export OPENSSL_STATIC=1
+          export OPENSSL_NO_PKG_CONFIG=1
+          export OPENSSL_VENDORED=1
+          cargo build --release --target $TARGET
 
       - name: Prepare Artifact
         run: |
+          TARGET=$(cat target.txt)
           mkdir dist
-          if [[ "$RUNNER_OS" == "macOS" ]]; then
-            cp target/release/ask-man dist/ask-man
-            tar -czvf ask-man-macos.tar.gz -C dist ask-man
-          else
-            cp target/release/ask-man dist/ask-man
-            tar -czvf ask-man-linux.tar.gz -C dist ask-man
-          fi
+          cp target/$TARGET/release/ask-man dist/ask-man
+          TAR_NAME="ask-man-${{ matrix.os }}-${{ matrix.arch }}.tar.gz"
+          tar -czvf $TAR_NAME -C dist ask-man
 
       - name: Upload Release Asset
         uses: softprops/action-gh-release@v1
