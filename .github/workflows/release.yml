@@ -51,7 +51,9 @@ jobs:
           TARGET=$(cat target.txt)
           mkdir dist
           cp target/$TARGET/release/ask-man dist/ask-man
-          TAR_NAME="ask-man-${{ matrix.os.replace('-latest', '') }}-${{ matrix.arch }}.tar.gz"
+          OS_NAME="${{ matrix.os }}"
+          OS_NAME="${OS_NAME/-latest/}"
+          TAR_NAME="ask-man-${OS_NAME}-${{ matrix.arch }}.tar.gz"
           tar -czvf $TAR_NAME -C dist ask-man
 
       - name: Upload Release Asset
