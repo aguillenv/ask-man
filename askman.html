@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ask-man – AI Terminal Assistant</title>
+  <style>
+    body {
+      font-family: monospace;
+      background-color: #0f0f0f;
+      color: #f8f8f2;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: #50fa7b;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      max-width: 600px;
+      margin: 0 auto 1.5rem;
+      line-height: 1.6;
+    }
+
+    .button {
+      background-color: #50fa7b;
+      color: #0f0f0f;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #40c96c;
+    }
+
+    pre {
+      background: #1e1e1e;
+      color: #f8f8f2;
+      padding: 1rem;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>ask-man</h1>
+    <p>The only bash command you’ll need to remember.<br>
+    Why an AI terminal, when you can ask your own terminal?</p>
+    <a href="https://github.com/aguillenv/ask-man" class="button">Get Started</a>
+  </header>
+
+  <main>
+    <pre>$ ask-man "Search recursively for a text string inside .py files"</pre>
+    <pre>$ ask-man "List active listening ports with process names" --explain</pre>
+  </main>
+
+</body>
+</html>
