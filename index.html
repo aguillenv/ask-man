@@ -18,21 +18,28 @@
       min-height: 100vh;
     }
 
-    header {
-      text-align: center;
-      padding: 2rem;
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      max-width: 600px;
+      width: 80vw;
+      margin-inline: auto;
     }
 
     h1 {
       font-size: 2rem;
       color: #50fa7b;
-      margin-bottom: 1rem;
+      margin: 0;
     }
 
     p {
-      max-width: 600px;
-      margin: 0 auto 1.5rem;
+      margin-inline: auto;
       line-height: 1.6;
+      margin: 0;
+      text-align: center;
     }
 
     .button {
@@ -51,26 +58,31 @@
     }
 
     pre {
+      text-align: left;
       background: #1e1e1e;
       color: #f8f8f2;
       padding: 1rem;
       border-radius: 5px;
       overflow-x: auto;
     }
+
+    section {
+      width: 100%;
+      margin-inline: auto;
+    }
   </style>
 </head>
 <body>
 
-  <header>
+  <main>
     <h1>ask-man</h1>
     <p>The only bash command you’ll need to remember.<br>
     Why an AI terminal, when you can ask your own terminal?</p>
     <a href="https://github.com/aguillenv/ask-man" class="button">Get Started</a>
-  </header>
-
-  <main>
-    <pre>$ ask-man "Search recursively for a text string inside .py files"</pre>
-    <pre>$ ask-man "List active listening ports with process names" --explain</pre>
+    <section>
+      <pre>$ ask-man "Search recursively for a text string inside .py files"</pre>
+      <pre>$ ask-man "List active listening ports with process names" --explain</pre>
+    </section>
   </main>
 
 </body>
